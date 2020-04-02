@@ -20,4 +20,14 @@ router.get("/:paintingId", async (req, res, next) => {
   }
 });
 
+router.post("/", async (req, res, next) => {
+  const { name, year } = req.body;
+  try {
+    const newPainting = await Painting.create({ name, year });
+    res.status(201).json(newPainting);
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;

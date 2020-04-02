@@ -1,12 +1,15 @@
 import React from "react";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import AllPaintings from "./AllPaintings";
 
 const Routes = () => {
   return (
-    <Router>
-      <h1>Fullstack Musuem</h1>
-      <div>{/* routes here */}</div>
-    </Router>
+    <div>
+      <h1>Fullstack Museum</h1>
+      <Router>
+        <Route exact path="/paintings" component={AllPaintings} />
+      </Router>
+    </div>
   );
 };
 
