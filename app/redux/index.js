@@ -1,10 +1,8 @@
-import { combineReducers } from 'redux'
-import campusesReducer from './campuses'
-import studentsReducer from './students'
+import { combineReducers } from "redux";
+import paintingsReducer from "./paintings";
 
 const appReducer = combineReducers({
-  campuses: campusesReducer,
-  students: studentsReducer
-})
+  paintings: paintingsReducer
+});
 
-export default appReducer
+export default appReducer;
