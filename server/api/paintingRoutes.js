@@ -30,4 +30,33 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+router.delete("/:paintingId", async (req, res, next) => {
+  try {
+    await Painting.destroy({
+      where: {
+        id: req.params.paintingId
+      }
+    });
+
+    res.send(req.params.paintingId);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.put("/:paintingId", async (req, res, next) => {
+  const { name } = req.body;
+  try {
+    const toBeUpdated = await Painting.findByPk(req.params.paintingId);
+
+    const updated = await toBeUpdated.update({
+      name: name
+    });
+
+    res.status(200).json(updated);
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;

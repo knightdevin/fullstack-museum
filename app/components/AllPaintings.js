@@ -1,18 +1,26 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import axios from "axios";
-import { getPaintings, createPainting } from "../redux/paintings";
+import {
+  getPaintings,
+  createPainting,
+  deletePainting,
+  updatePainting
+} from "../redux/paintings";
 
 class AllPaintings extends Component {
   constructor() {
     super();
     this.state = {
       name: "",
-      year: ""
+      year: "",
+      editName: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
   }
 
   componentDidMount() {
@@ -30,6 +38,22 @@ class AllPaintings extends Component {
     const paintingInfo = { name: this.state.name, year: this.state.year };
     this.props.createPainting(paintingInfo);
     this.setState({ name: "", year: "" });
+  }
+
+  handleDelete(paintingId) {
+    this.props.deletePainting(paintingId);
+  }
+
+  handleEdit(e, paintingId) {
+    e.preventDefault();
+    const newPaintingInfo = { name: this.state.editName };
+
+    // const res = await axios.put(
+    //   `/api/paintings/${paintingId}`,
+    //   newPaintingInfo
+    // );
+
+    this.props.updatePainting(paintingId, newPaintingInfo);
   }
 
   render() {
@@ -57,7 +81,23 @@ class AllPaintings extends Component {
           return (
             <div key={painting.id}>
               <p>{painting.name}</p>
-              <button type="button">Delete</button>
+              <button
+                type="button"
+                onClick={() => this.handleDelete(painting.id)}
+              >
+                Delete
+              </button>
+
+              <p>Don't ever write a form like this please</p>
+              <form onSubmit={e => this.handleEdit(e, painting.id)}>
+                <input
+                  type="text"
+                  onChange={this.handleChange}
+                  name="editName"
+                  value={this.state.editName}
+                />
+                <button type="submit">Submit</button>
+              </form>
             </div>
           );
         })}
@@ -72,7 +112,10 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   getPaintings: () => dispatch(getPaintings()),
-  createPainting: paintingInfo => dispatch(createPainting(paintingInfo))
+  createPainting: paintingInfo => dispatch(createPainting(paintingInfo)),
+  deletePainting: paintingId => dispatch(deletePainting(paintingId)),
+  updatePainting: (paintingId, info) =>
+    dispatch(updatePainting(paintingId, info))
 });
 
 export default connect(mapState, mapDispatch)(AllPaintings);
