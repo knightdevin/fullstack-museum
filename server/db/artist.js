@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 const db = require("./database.js");
 
-const Painting = db.define("paintings", {
+const Artist = db.define("artists", {
   name: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -9,15 +9,15 @@ const Painting = db.define("paintings", {
       notEmpty: true
     }
   },
-  // artist: {
-  //   type: Sequelize.STRING,
-  //   allowNull: false,
-  //   validate: {
-  //     notEmpty: true
-  //   }
-  // },
-  year: {
-    type: Sequelize.INTEGER,
+  country: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
+  },
+  dates: {
+    type: Sequelize.STRING,
     allowNull: false,
     validate: {
       notEmpty: true
@@ -25,4 +25,4 @@ const Painting = db.define("paintings", {
   }
 });
 
-module.exports = Painting;
+module.exports = Artist;
