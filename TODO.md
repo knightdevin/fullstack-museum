@@ -20,8 +20,8 @@
 
 ## Frontend
 
-- [ ] Create component to show all paintings
-- [ ] Create component to show all artists
+- [ x ] Create component to show all paintings
+- [ x ] Create component to show all artists
 - [ ] Create component to show single painting
 - [ ] Create component to show single artist
 

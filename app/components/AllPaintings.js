@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 // import your thunks
-import { getPaintings } from '../redux/paintings';
+import { getPaintings, createPainting } from '../redux/paintings';
 
 class AllPaintings extends Component {
   // we'll create a form on this page...so we'll do a constructor function:
@@ -12,7 +12,7 @@ class AllPaintings extends Component {
     super();
     this.state = {
       name: '',
-      year: 0,
+      year: '',
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -33,20 +33,30 @@ class AllPaintings extends Component {
   // this will allow us to handle submits into forms
   handleSubmit(event) {
     event.preventDefault(); // this will prevent page from refreshing
+
+    // we'll store the name & year into a single varialbe...
+    const paintingInfo = { name: this.state.name, year: this.state.year };
+    this.props.createPainting(paintingInfo);
+    this.setState({ name: '', year: '' });
   }
 
   render() {
     return (
       <div>
         <h2>Add a new painting</h2>
-        <form>
+        <form onSubmit={(event) => this.handleChange(event)}>
           <input
-            onChange={() => this.handleChange(event)}
+            onChange={(event) => this.handleChange(event)}
             type="text"
             value={this.state.name}
             name="name"
           />
-          <input type="text" value={this.state.year} name="year" />
+          <input
+            onChange={(event) => this.handleChange(event)}
+            type="text"
+            value={this.state.year}
+            name="year"
+          />
           <button type="submit">Submit</button>
         </form>
 
@@ -72,6 +82,7 @@ const mapState = (state) => ({
 // also need a mapDispatchToProps here:
 const mapDispatch = (dispatch) => ({
   getPaintings: () => dispatch(getPaintings()),
+  createPainting: (paintingInfo) => dispatch(createPainting(paintingInfo)),
 });
 
 // now export the component using export default

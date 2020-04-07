@@ -32,5 +32,17 @@ router.get('/:paintingId', async (req, res, next) => {
   }
 });
 
+router.post('/', async (req, res, next) => {
+  // req.body will contain year and name...we can save that in destructured variable.
+  const { name, year } = req.body;
+  try {
+    const newPainting = await Painting.create({ name, year });
+    res.setStatus(201).nson(newPainting);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
 // don't forget to export the router!
 module.exports = router;
