@@ -31,3 +31,8 @@ main {
   flex-direction: column;
   justify-content: center;
 }
+
+.artistPhotos {
+  width: 300px, 
+  height: 200px,
+}
