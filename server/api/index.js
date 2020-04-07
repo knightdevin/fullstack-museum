@@ -1,6 +1,9 @@
-"use strict";
+'use strict';
 
-const router = require("express").Router();
+const router = require('express').Router();
+
+const paintingRoutes = require('./paintingRoutes');
+const artistRoutes = require('./artistRoutes');
 
 // Your routes go here!
 // NOTE: Any routes that you put here are ALREADY mounted on `/api`
@@ -19,8 +22,15 @@ const router = require("express").Router();
 // middleware will generate a 404, and send it to your
 // error-handling endware!
 
+// --------------------------------------
+// this will create our /api/paintings route
+router.use('/paintings', paintingRoutes);
+
+// this will create our /api/artist route
+router.use('/artists', artistRoutes);
+
 router.use((req, res, next) => {
-  const err = new Error("API route not found!");
+  const err = new Error('API route not found!');
   err.status = 404;
   next(err);
 });
